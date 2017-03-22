@@ -55,7 +55,7 @@ void SetBitPort(WORD Puerto, BYTE num_bit)
 
 void ClrBitPort( WORD Puerto, BYTE num_bit)
 {
-	BYTE mask=0x01; 				/* mascara inicial */
+	BYTE mask=0x00; 				/* mascara inicial */
 	BYTE temp; 						/* dato auxiliar */
 	temp = inportb( Puerto ); 		/* leer dato del puerto */
 	mask = mask << num_bit; 		/* ajustar mascara según num_bit */
