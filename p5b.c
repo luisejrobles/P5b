@@ -59,8 +59,7 @@ void ClrBitPort( WORD Puerto, BYTE num_bit)
 	BYTE temp; 						/* dato auxiliar */
 	temp = inportb( Puerto ); 		/* leer dato del puerto */
 	mask = mask << num_bit; 		/* ajustar mascara según num_bit */
-	temp = temp | mask;
-	temp = temp ~ mask;				/* aplicar mascara con operador OR */
+	temp = temp & mask;
 	outportb( Puerto , temp ); 		/* presentar resultado en el puerto */
 }
 
@@ -81,18 +80,17 @@ unsigned char TstBitPort( WORD Puerto, BYTE num_bit)
 	temp = inportb( Puerto ); 		/* leer dato del puerto */
 	mask = mask << num_bit; 		/* ajustar mascara según num_bit */
 	
-	if((temp | mask) == > 1 ){
-		return 1;
-	}
-	else
-	{
+	if((temp | mask) == 0 ){
 		return 0;
 	}
+	
+	return 1;
 	
 }
 
 unsigned char ReverseBitPort( WORD Puerto, BYTE num_bit)
 {
+	
 	
 }
 
