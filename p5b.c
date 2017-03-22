@@ -6,8 +6,13 @@
 #define RCtr 0x43
 #define PTOs_all_out 0x80
 
+void ClrBitPort( WORD Puerto, BYTE num_bit);
+void NotBitPort( WORD Puerto, BYTE num_bit);
 void outportb( WORD port, BYTE dato);
 void printBin( BYTE dato );
+unsigned char ReverseBitPort( WORD Puerto, BYTE num_bit);
+unsigned char TstBitPort( WORD Puerto, BYTE num_bit);
+
 char dato;
 
 void main( void ){
@@ -46,6 +51,49 @@ void SetBitPort(WORD Puerto, BYTE num_bit)
 	mask = mask << num_bit; 		/* ajustar mascara según num_bit */
 	temp = temp | mask; 			/* aplicar mascara con operador OR */
 	outportb( Puerto , temp ); 		/* presentar resultado en el puerto */
+}
+
+void ClrBitPort( WORD Puerto, BYTE num_bit)
+{
+	BYTE mask=0x01; 				/* mascara inicial */
+	BYTE temp; 						/* dato auxiliar */
+	temp = inportb( Puerto ); 		/* leer dato del puerto */
+	mask = mask << num_bit; 		/* ajustar mascara según num_bit */
+	temp = temp | mask;
+	temp = temp ~ mask;				/* aplicar mascara con operador OR */
+	outportb( Puerto , temp ); 		/* presentar resultado en el puerto */
+}
+
+void NotBitPort( WORD Puerto, BYTE num_bit)
+{
+	BYTE mask=0x01; 				/* mascara inicial */
+	BYTE temp; 						/* dato auxiliar */
+	temp = inportb( Puerto ); 		/* leer dato del puerto */
+	mask = mask << num_bit; 		/* ajustar mascara según num_bit */
+	temp = temp ~ mask;
+	outportb( Puerto , temp ); 		/* presentar resultado en el puerto */
+}
+
+unsigned char TstBitPort( WORD Puerto, BYTE num_bit)
+{
+	BYTE mask=0x01; 				/* mascara inicial */
+	BYTE temp; 						/* dato auxiliar */
+	temp = inportb( Puerto ); 		/* leer dato del puerto */
+	mask = mask << num_bit; 		/* ajustar mascara según num_bit */
+	
+	if((temp | mask) == > 1 ){
+		return 1;
+	}
+	else
+	{
+		return 0;
+	}
+	
+}
+
+unsigned char ReverseBitPort( WORD Puerto, BYTE num_bit)
+{
+	
 }
 
 
