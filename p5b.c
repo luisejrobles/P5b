@@ -51,7 +51,7 @@ void main( void ){
 		getch();
 		putchar(' ');
 		putchar(' ');
-		ReverseBitPort(PA);
+		/*ReverseBitPort(PA);*/
 		dTemp = inportb(PA);
 		printBin(dTemp);
 		getch();
@@ -133,13 +133,13 @@ unsigned char TstBitPort( WORD Puerto, BYTE num_bit)
 	BYTE temp; 						/* dato auxiliar */
 	temp = inportb( Puerto ); 		/* leer dato del puerto */
 	mask = mask << num_bit; 		/* ajustar mascara según num_bit */
-	
-	if((temp | mask) == 0 ){
+
+	if((temp&mask) == 0 ){
 		return 0;
+	}else
+	{
+		return 1;
 	}
-	
-	return 1;
-	
 }
 
 unsigned char ReverseBitPort(WORD Puerto)
@@ -153,10 +153,22 @@ unsigned char ReverseBitPort(WORD Puerto)
 	
 	do
 	{
-		if( (temp&MSBmask) != (temp&LSBmask) ) /*comparando si son iguales*/
+		putchar(10);
+		putchar(13);
+		putchar('M');
+		putchar(' ');
+		printBin(temp&MSBmask);
+		putchar(10);
+		putchar(13);
+		putchar('L');
+		putchar(' ');
+		printBin(temp&LSBmask);
+
+		if( ((temp&MSBmask > 0)&&(temp&LSBmask) ==0) || ((temp&MSBmask == 0)&&(temp&LSBmask) > 0) ) /*comparando si son iguales*/
 		{
 			temp = temp ^ LSBmask;		/*aplicando XOR para invertir */
 			temp = temp ^ MSBmask;		/*aplicando XOR para invertir */
+			putchar('E');
 		}
 		
 		MSBmask = MSBmask >> 1;		/*corrimiento a la derecha de la mascara mas significativa*/
