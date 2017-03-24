@@ -51,7 +51,9 @@ void main( void ){
 		getch();
 		putchar(' ');
 		putchar(' ');
-		/*ReverseBitPort(PA);*/
+		
+		ReverseBitPort(PA);
+
 		dTemp = inportb(PA);
 		printBin(dTemp);
 		getch();
@@ -136,10 +138,8 @@ unsigned char TstBitPort( WORD Puerto, BYTE num_bit)
 
 	if((temp&mask) == 0 ){
 		return 0;
-	}else
-	{
-		return 1;
 	}
+	return 1;
 }
 
 unsigned char ReverseBitPort(WORD Puerto)
