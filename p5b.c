@@ -144,7 +144,8 @@ unsigned char TstBitPort( WORD Puerto, BYTE num_bit)
 
 unsigned char ReverseBitPort(WORD Puerto)
 {
-	int cont = 4;
+	int cMSB = 7, cLSB = 0;
+
 	BYTE temp;
 	BYTE MSBmask = 0x80; 	/*Iniciando en el bit mas significativo*/
 	BYTE LSBmask = 0x1; 		/*iniciando la mascara en el bit menos seignificativo*/
@@ -153,27 +154,10 @@ unsigned char ReverseBitPort(WORD Puerto)
 	
 	do
 	{
-		putchar(10);
-		putchar(13);
-		putchar('M');
-		putchar(' ');
-		printBin(temp&MSBmask);
-		putchar(10);
-		putchar(13);
-		putchar('L');
-		putchar(' ');
-		printBin(temp&LSBmask);
-
-		if( ((temp&MSBmask > 0)&&(temp&LSBmask) ==0) || ((temp&MSBmask == 0)&&(temp&LSBmask) > 0) ) /*comparando si son iguales*/
+		if( ((temp&MSBmask >0)&&(temp&LSBmask ==0)) || ((temp&MSBmask ==0)&&(temp&LSBmask >0)))
 		{
-			temp = temp ^ LSBmask;		/*aplicando XOR para invertir */
-			temp = temp ^ MSBmask;		/*aplicando XOR para invertir */
-			putchar('E');
+			
 		}
-		
-		MSBmask = MSBmask >> 1;		/*corrimiento a la derecha de la mascara mas significativa*/
-		LSBmask = LSBmask << 1;		/*corrimiento a la izquierda de la mascara menos significativa*/
-		cont--;
 	}while(cont == 0);		
 }
 
