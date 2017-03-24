@@ -51,9 +51,7 @@ void main( void ){
 		getch();
 		putchar(' ');
 		putchar(' ');
-		
 		ReverseBitPort(PA);
-
 		dTemp = inportb(PA);
 		printBin(dTemp);
 		getch();
@@ -98,6 +96,7 @@ void printBin( BYTE dato ){
 		msk>>=1;
 	}while( msk );
 }
+
 
 void SetBitPort(WORD Puerto, BYTE num_bit)
 {
@@ -148,7 +147,6 @@ unsigned char ReverseBitPort(WORD Puerto)
 	BYTE temp;
 	/*BYTE MSBmask = 0x80; 	Iniciando en el bit mas significativo
 	BYTE LSBmask = 0x1; 		iniciando la mascara en el bit menos seignificativo*/
-	
 	do
 	{
 		if( (TstBitPort(Puerto,cMSB)&TstBitPort(Puerto,cLSB)) == 0 )
@@ -160,10 +158,7 @@ unsigned char ReverseBitPort(WORD Puerto)
 		cLSB++;
 		/*MSBmask = MSBmask >> 1;
 		LSBmask = LSBmask << 1;*/
-
-
 	}while(cMSB > cLSB);
-
 }
 
 
