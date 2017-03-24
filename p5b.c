@@ -30,7 +30,7 @@ void main( void ){
 	puts("Practica 5b"); /* imprimir mensaje */
 	putchar(10);
 	putchar(13);
-	dato = 128;
+	dato = 170;
 
 	outportb(RCtr, PTOs_all_out);  /*inicializar 8255 */
 	/*outportb(RCtr,0x82);*/
@@ -145,20 +145,25 @@ unsigned char TstBitPort( WORD Puerto, BYTE num_bit)
 unsigned char ReverseBitPort(WORD Puerto)
 {
 	int cMSB = 7, cLSB = 0;
-
 	BYTE temp;
-	BYTE MSBmask = 0x80; 	/*Iniciando en el bit mas significativo*/
-	BYTE LSBmask = 0x1; 		/*iniciando la mascara en el bit menos seignificativo*/
-	
-	temp = inportb(Puerto);
+	/*BYTE MSBmask = 0x80; 	Iniciando en el bit mas significativo
+	BYTE LSBmask = 0x1; 		iniciando la mascara en el bit menos seignificativo*/
 	
 	do
 	{
-		if( ((temp&MSBmask >0)&&(temp&LSBmask ==0)) || ((temp&MSBmask ==0)&&(temp&LSBmask >0)))
+		if( (TstBitPort(Puerto,cMSB)&TstBitPort(Puerto,cLSB)) == 0 )
 		{
-			
+			NotBitPort(PA,cMSB);
+			NotBitPort(PA,cLSB);
 		}
-	}while(cont == 0);		
+		cMSB--;
+		cLSB++;
+		/*MSBmask = MSBmask >> 1;
+		LSBmask = LSBmask << 1;*/
+
+
+	}while(cMSB > cLSB);
+
 }
 
 
