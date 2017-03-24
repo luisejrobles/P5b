@@ -10,12 +10,13 @@ char getch(void);
 
 extern unsigned char inportb(WORD Puerto);
 extern void outportb(WORD Puerto, BYTE dato);
-extern void putchar(BYTE dato);
-extern void puts();
+
+void putchar(BYTE dato);
 
 void ClrBitPort(WORD Puerto, BYTE num_bit);
 void NotBitPort(WORD Puerto, BYTE num_bit);
 void printBin(BYTE dato);
+void puts(char *str);
 
 unsigned char ReverseBitPort(WORD Puerto);
 unsigned char TstBitPort(WORD Puerto, BYTE num_bit);
@@ -23,22 +24,20 @@ unsigned char TstBitPort(WORD Puerto, BYTE num_bit);
 char dato;
 
 void main( void ){
-	puts("Practica 5b$"); /* imprimir mensaje */
-	outportb(RCtr, PTOs_all_out); /* inicializar 8255 */
-	
+	puts("Practica 5b"); /* imprimir mensaje */
+	/*outportb(RCtr, PTOs_all_out);  inicializar 8255 */
+	outportb(RCtr,0x82);
+
 	/*outportb(PA,0x55);  presentar 55h en el Pto A */
-	
-	while(1){
+	/*while(1){
 		putchar(10);
 		putchar(13);
-		dato = getch(); /* leer tecla */
+		dato = getch();  
 		putchar(dato);
 		putchar('=');
 		printBin(dato);
-		outportb(PC,dato); /* presentar tecla en PB */
-		puts(10);
-		puts(13);
-	}
+		outportb(PA,dato); 
+	}*/
 } 
 
 char getch(void)
@@ -50,6 +49,22 @@ char getch(void)
 	asm mov dato,al
 
 	return dato;
+}
+
+void putchar(BYTE dato)
+{
+
+	asm mov dl, dato
+	asm mov ah,02h
+	asm int 21h
+}
+
+void puts(char *str)
+{
+	while(*str)
+	{
+		putchar(*str++);
+	}
 }
 
 /* función simple para desplegar un byte en formato binario */
@@ -124,8 +139,8 @@ unsigned char ReverseBitPort(WORD Puerto)
 			temp = temp ^ MSBmask;		/*aplicando XOR para invertir */
 		}
 		
-		MSBmask >> 1;		/*corrimiento a la derecha de la mascara mas significativa*/
-		LSBmask << 1;		/*corrimiento a la izquierda de la mascara menos significativa*/
+		MSBmask = MSBmask >> 1;		/*corrimiento a la derecha de la mascara mas significativa*/
+		LSBmask = LSBmask << 1;		/*corrimiento a la izquierda de la mascara menos significativa*/
 		cont--;
 	}while(cont == 0);		
 }

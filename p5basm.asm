@@ -4,8 +4,6 @@ dosseg
 .CODE
 public _inportb
 public _outportb
-public _putchar
-public _puts
 
 _outportb PROC 
 	push bp
@@ -40,41 +38,6 @@ _inportb PROC
 	pop ax
 	ret
 _inportb ENDP
-
-_putchar PROC 
-	
-	push ax
-	push dx
-
-	push bp
-	mov bp,sp
-	
-	mov dl, [bp+4]
-	mov ah,02h
-	int 21h
-
-	pop bp
-	pop dx 
-	pop ax
-	ret
-_putchar ENDP
-
-_puts PROC
-	push ax
-	push dx 
-
-	push bp
-	mov bp,sp 
-
-	mov ah,09h
-	mov dx,[bp+4]
-	int 21h
-
-	pop bp 
-	pop dx
-	pop ax
-	ret 
-_puts ENDP
 
 END
 
