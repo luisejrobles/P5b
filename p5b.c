@@ -17,6 +17,7 @@ void ClrBitPort(WORD Puerto, BYTE num_bit);
 void NotBitPort(WORD Puerto, BYTE num_bit);
 void printBin(BYTE dato);
 void puts(char *str);
+void SetBitPort(WORD Puerto, BYTE num_bit);
 
 unsigned char ReverseBitPort(WORD Puerto);
 unsigned char TstBitPort(WORD Puerto, BYTE num_bit);
@@ -24,10 +25,15 @@ unsigned char TstBitPort(WORD Puerto, BYTE num_bit);
 char dato;
 
 void main( void ){
-	puts("Practica 5b"); /* imprimir mensaje */
-	/*outportb(RCtr, PTOs_all_out);  inicializar 8255 */
-	outportb(RCtr,0x82);
+	char dTemp;
 
+	puts("Practica 5b"); /* imprimir mensaje */
+	putchar(10);
+	putchar(13);
+	dato = 128;
+
+	outportb(RCtr, PTOs_all_out);  /*inicializar 8255 */
+	/*outportb(RCtr,0x82);*/
 	/*outportb(PA,0x55);  presentar 55h en el Pto A */
 	/*while(1){
 		putchar(10);
@@ -38,6 +44,20 @@ void main( void ){
 		printBin(dato);
 		outportb(PA,dato); 
 	}*/
+	while(1)
+	{
+		outportb(PA,dato);
+		printBin(dato);
+		getch();
+		putchar(' ');
+		putchar(' ');
+		ReverseBitPort(PA);
+		dTemp = inportb(PA);
+		printBin(dTemp);
+		getch();
+		putchar(10);
+		putchar(13);
+	}
 } 
 
 char getch(void)
@@ -79,12 +99,12 @@ void printBin( BYTE dato ){
 
 void SetBitPort(WORD Puerto, BYTE num_bit)
 {
-	BYTE mask=0x01; 				/* mascara inicial */
-	BYTE temp; 						/* dato auxiliar */
-	temp = inportb( Puerto ); 		/* leer dato del puerto */
-	mask = mask << num_bit; 		/* ajustar mascara según num_bit */
-	temp = temp | mask; 			/* aplicar mascara con operador OR */
-	outportb( Puerto , temp ); 		/* presentar resultado en el puerto */
+	BYTE mask=0x01; /* mascara inicial */
+	BYTE temp; /* dato auxiliar */
+	temp = inportb( Puerto ); /* leer dato del puerto */
+	mask = mask << num_bit; /* ajustar mascara según num_bit */
+	temp = temp | mask; /* aplicar mascara con operador OR */
+	outportb( Puerto , temp ); /* presentar resultado en el puerto */
 }
 
 void ClrBitPort( WORD Puerto, BYTE num_bit)
@@ -126,14 +146,14 @@ unsigned char ReverseBitPort(WORD Puerto)
 {
 	int cont = 4;
 	BYTE temp;
-	BYTE MSBmask = 0x10000000; 	/*Iniciando en el bit mas significativo*/
+	BYTE MSBmask = 0x80; 	/*Iniciando en el bit mas significativo*/
 	BYTE LSBmask = 0x1; 		/*iniciando la mascara en el bit menos seignificativo*/
 	
-	temp =inportB( Puerto);
+	temp = inportb(Puerto);
 	
 	do
 	{
-		if( (temp&MSBmask) != (temp&LSBmask)) /*comparando si son iguales*/
+		if( (temp&MSBmask) != (temp&LSBmask) ) /*comparando si son iguales*/
 		{
 			temp = temp ^ LSBmask;		/*aplicando XOR para invertir */
 			temp = temp ^ MSBmask;		/*aplicando XOR para invertir */

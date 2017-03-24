@@ -12,30 +12,31 @@ _outportb PROC
 	push ax
 	push dx
 
+	mov ax,0
 
 	mov dx, [bp+4]
 	mov al, [bp+6]
 	out dx, al
 
-	pop ax
 	pop dx 
+	pop ax
 	pop bp
 	ret
 _outportb ENDP
 
 _inportb PROC 
-	push ax
-	push dx
-
 	push bp
 	mov bp,sp
-	
+
+	push dx
+
+	mov ah,0
+
 	mov dx, [bp+4]
 	in al,dx
 
-	pop bp
 	pop dx
-	pop ax
+	pop bp
 	ret
 _inportb ENDP
 
