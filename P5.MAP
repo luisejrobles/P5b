@@ -1,0 +1,14 @@
+
+ Start  Stop   Length Name               Class
+
+ 00000H 001AEH 001AFH _TEXT              CODE
+ 001B0H 001C0H 00011H _DATA              DATA
+ 001C2H 001C2H 00001H _BSS               BSS
+
+Undefined symbol '_PUTS' in module P5B.C
+Undefined symbol '_GETCH' in module P5B.C
+Undefined symbol '_PUTCHAR' in module P5B.C
+Undefined symbol '_INPORTB' in module P5B.C
+Program entry point at 0000:0000
+Warning: no stack
+
