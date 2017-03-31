@@ -30,7 +30,8 @@ void main( void ){
 	puts("Practica 5b"); /* imprimir mensaje */
 	putchar(10);
 	putchar(13);
-	dato = 170;
+
+	dato = 0x01;
 
 	outportb(RCtr, PTOs_all_out);  /*inicializar 8255 */
 	/*outportb(RCtr,0x82);*/
@@ -148,7 +149,7 @@ unsigned char ReverseBitPort(WORD Puerto)
 	BYTE temp;
 	do
 	{
-		if( (TstBitPort(Puerto,cMSB)&TstBitPort(Puerto,cLSB)) == 0 )
+		if( (TstBitPort(Puerto,cMSB)!=TstBitPort(Puerto,cLSB)) )
 		{
 			NotBitPort(PA,cMSB);
 			NotBitPort(PA,cLSB);
