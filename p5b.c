@@ -146,8 +146,6 @@ unsigned char ReverseBitPort(WORD Puerto)
 {
 	int cMSB = 7, cLSB = 0;
 	BYTE temp;
-	/*BYTE MSBmask = 0x80; 	Iniciando en el bit mas significativo
-	BYTE LSBmask = 0x1; 		iniciando la mascara en el bit menos seignificativo*/
 	do
 	{
 		if( (TstBitPort(Puerto,cMSB)&TstBitPort(Puerto,cLSB)) == 0 )
@@ -157,8 +155,6 @@ unsigned char ReverseBitPort(WORD Puerto)
 		}
 		cMSB--;
 		cLSB++;
-		/*MSBmask = MSBmask >> 1;
-		LSBmask = LSBmask << 1;*/
 	}while(cMSB > cLSB);
 }
 
