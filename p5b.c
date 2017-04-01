@@ -30,21 +30,9 @@ void main( void ){
 	puts("Practica 5b"); /* imprimir mensaje */
 	putchar(10);
 	putchar(13);
-
 	dato = 0x01;
 
 	outportb(RCtr, PTOs_all_out);  /*inicializar 8255 */
-	/*outportb(RCtr,0x82);*/
-	/*outportb(PA,0x55);  presentar 55h en el Pto A */
-	/*while(1){
-		putchar(10);
-		putchar(13);
-		dato = getch();  
-		putchar(dato);
-		putchar('=');
-		printBin(dato);
-		outportb(PA,dato); 
-	}*/
 	while(1)
 	{
 		outportb(PA,dato);
@@ -52,12 +40,50 @@ void main( void ){
 		getch();
 		putchar(' ');
 		putchar(' ');
+
+		putchar(10);
+		putchar(13);
+		puts("ReverseBitPort");
+		putchar(10);
+		putchar(13);
 		ReverseBitPort(PA);
 		dTemp = inportb(PA);
 		printBin(dTemp);
-		getch();
+
 		putchar(10);
 		putchar(13);
+		puts("NotBitPort");
+		putchar(10);
+		putchar(13);
+		NotBitPort(PA,6);
+		dTemp = inportb(PA);
+		printBin(dTemp);
+		getch();
+
+		putchar(10);
+		putchar(13);
+		puts("SetBitPort");
+		putchar(10);
+		putchar(13);
+		SetBitPort(PA,5);
+		dTemp = inportb(PA);
+		printBin(dTemp);
+		getch();
+
+		putchar(10);
+		putchar(13);
+		puts("TstBitPort");
+		putchar(10);
+		putchar(13);
+		if(TstBitPort(PA,3) == 0)
+		{
+			putchar('0');
+		}else
+		{
+			putchar('1');
+		}
+		TstBitPort(PA,3);
+		getch();
 	}
 } 
 
