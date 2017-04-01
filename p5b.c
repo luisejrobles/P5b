@@ -74,7 +74,6 @@ char getch(void)
 
 void putchar(BYTE dato)
 {
-
 	asm mov dl, dato
 	asm mov ah,02h
 	asm int 21h
